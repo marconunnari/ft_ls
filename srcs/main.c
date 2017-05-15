@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:22:33 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/14 18:22:56 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/15 17:47:45 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,33 @@ int		ft_btree_strcmp(t_btree *b1, t_btree *b2)
 	return (ft_strcmp((char*)b1->content, (char*)b2->content));
 }
 
-char		*get_type(mode_t mode)
+char		get_type(mode_t mode)
 {
-	switch (mode & S_IFMT)
-	{
-	case S_IFBLK:  return ("block device");
-	case S_IFCHR:  return ("character device");
-	case S_IFDIR:  return ("directory");
-	case S_IFIFO:  return ("FIFO/pipe");
-	case S_IFLNK:  return ("symlink");
-	case S_IFREG:  return ("regular file");
-	case S_IFSOCK: return ("socket");
-	default:       return ("unknown?");
-	}
+	int		ft;
+
+	ft = mode & S_IFMT;
+	if (ft == S_IFDIR)
+		return ('d');
+	if (ft == S_IFREG)
+		return ('-');
+	return (0);
+}
+
+char		*get_permissions(mode_t mode)
+{
+	char		*permissions;
+
+	permissions = ft_strnew(10);
+	permissions[0] = mode & S_IRUSR ? 'r' : '-';
+	permissions[1] = mode & S_IWUSR ? 'w' : '-';
+	permissions[2] = mode & S_IXUSR ? 'x' : '-';
+	permissions[3] = mode & S_IRGRP ? 'r' : '-';
+	permissions[4] = mode & S_IWGRP ? 'w' : '-';
+	permissions[5] = mode & S_IXGRP ? 'x' : '-';
+	permissions[6] = mode & S_IROTH ? 'r' : '-';
+	permissions[7] = mode & S_IWOTH ? 'w' : '-';
+	permissions[8] = mode & S_IXOTH ? 'x' : '-';
+	return (permissions);
 }
 
 void		ft_btree_putstr(t_btree *b)
@@ -38,8 +52,8 @@ void		ft_btree_putstr(t_btree *b)
 
 	printf("%s: \n", (char*)b->content);
 	stat((char*)b->content, &info);
-	printf("\t%s: %s\n", "Type", get_type(info.st_mode));
-	printf("\t%s: %lo\n", "Modes", (unsigned long)info.st_mode);
+	printf("\t%s: %c\n", "Type", get_type(info.st_mode));
+	printf("\t%s: %s\n", "Modes", get_permissions(info.st_mode));
 	printf("\t%s: %ld\n", "Links number", (long)info.st_nlink);
 	printf("\t%s: %ld\n", "Owner", (long)info.st_uid);
 	printf("\t%s: %ld\n", "Owner group", (long)info.st_gid);
