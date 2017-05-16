@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/14 18:21:57 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/16 23:08:29 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,28 @@ typedef struct	s_args
 {
 	char	*opts;
 	t_list	*files;
-}		t_args;
+}				t_args;
 
-char		get_type(mode_t mode);
-char		*get_username(long uid);
-char		*get_groupname(long gid);
-char		*get_permissions(mode_t mode);
+typedef struct	s_file
+{
+	char		*name;
+	char		type;
+/*	char		*permissions;
+	long		links;
+	char		*owner;
+	char		*group;
+	long long	size;
+	int			day;
+	int			month;
+	int			hours;
+	int			minutes;*/
+}				t_file;
 
+char			get_type(mode_t mode);
+char			*get_username(long uid);
+char			*get_groupname(long gid);
+char			*get_permissions(mode_t mode);
+t_args			*parse_args(int argc, char **argv);
+void			ls(t_args *args, int first);
+int			ft_btree_cmp(t_btree *b1, t_btree *b2);
 #endif

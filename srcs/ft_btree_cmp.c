@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_btree_cmp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/14 18:22:33 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/16 21:32:17 by mnunnari         ###   ########.fr       */
+/*   Created: 2017/05/16 22:27:04 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/05/16 22:27:34 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		printfile(t_list *elem)
+int			ft_btree_cmp(t_btree *b1, t_btree *b2)
 {
-	printf("%s ", (char*)elem->content);
-}
-
-int		main(int argc, char **argv)
-{
-	t_args		*args;
-
-	args = parse_args(argc, argv);
-	printf("Options: %s\n", args->opts);
-	printf("Files: ");
-	ft_lstiter(args->files, &printfile);
-	printf("\n");
-	ls(args, 1);
+	return (ft_strcmp((char*)b1->content, (char*)b2->content));
 }
