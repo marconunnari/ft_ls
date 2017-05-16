@@ -12,68 +12,69 @@
 
 #include "ft_ls.h"
 
-int		ft_btree_strcmp(t_btree *b1, t_btree *b2)
+t_args		*parse_args(int argc, char **argv)
 {
-	return (ft_strcmp((char*)b1->content, (char*)b2->content));
-}
+	int		i;
+	t_args		*args;
+	t_list		*file;
 
-char		get_type(mode_t mode)
-{
-	int		ft;
-
-	ft = mode & S_IFMT;
-	if (ft == S_IFDIR)
-		return ('d');
-	if (ft == S_IFREG)
-		return ('-');
-	return (0);
-}
-
-char		*get_permissions(mode_t mode)
-{
-	char		*permissions;
-
-	permissions = ft_strnew(10);
-	permissions[0] = mode & S_IRUSR ? 'r' : '-';
-	permissions[1] = mode & S_IWUSR ? 'w' : '-';
-	permissions[2] = mode & S_IXUSR ? 'x' : '-';
-	permissions[3] = mode & S_IRGRP ? 'r' : '-';
-	permissions[4] = mode & S_IWGRP ? 'w' : '-';
-	permissions[5] = mode & S_IXGRP ? 'x' : '-';
-	permissions[6] = mode & S_IROTH ? 'r' : '-';
-	permissions[7] = mode & S_IWOTH ? 'w' : '-';
-	permissions[8] = mode & S_IXOTH ? 'x' : '-';
-	return (permissions);
-}
-
-void		ft_btree_putstr(t_btree *b)
-{
-	struct stat info;
-
-	printf("%s: \n", (char*)b->content);
-	stat((char*)b->content, &info);
-	printf("\t%s: %c\n", "Type", get_type(info.st_mode));
-	printf("\t%s: %s\n", "Modes", get_permissions(info.st_mode));
-	printf("\t%s: %ld\n", "Links number", (long)info.st_nlink);
-	printf("\t%s: %ld\n", "Owner", (long)info.st_uid);
-	printf("\t%s: %ld\n", "Owner group", (long)info.st_gid);
-	printf("\t%s: %lld\n", "Size", (long long)info.st_size);
-	printf("\t%s: %s\n", "Last file modification", ctime(&info.st_mtime));
-}
-
-int		main()
-{
-	t_btree *entries = NULL;
-	DIR *dirp = opendir(".");
-	struct dirent *entry;
-	while ((entry = readdir(dirp)))
+	i = 1;
+	args = (t_args*)malloc(sizeof(t_args));
+	args->opts = ft_strnew(0);
+	args->files = ft_lstnew(".", 2);
+	while (i < argc && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
 	{
-		if (entries == NULL)
-			entries = ft_btreenew(entry->d_name, 0);
-		else
-			ft_btreeadd(&entries, ft_btreenew(entry->d_name, 0),
-				&ft_btree_strcmp);
+		REASSIGN(args->opts, ft_strjoin(args->opts, &argv[i][1]));
+		i++;
 	}
-	ft_btree_apply_infix(entries, &ft_btree_putstr);
-	closedir(dirp);
+	while (i < argc)
+	{
+		if (!(file = ft_lstnew(argv[i], ft_strlen(argv[i]) + 1)))
+			return (NULL);
+		if (((char*)args->files->content)[0] == '.')
+			args->files = file;
+		else
+			ft_lstadd(&args->files, file);
+		i++;
+	}
+	return (args);
+}
+
+void		usage(int code)
+{
+	printf("%s\n", "usage: ft_ls [-Ralrt] [file ...]");
+	exit(code);
+}
+
+void		checkopts(char *opts)
+{
+	int	i;
+
+	i = 0;
+	while (opts[i])
+	{
+		if(!ft_strcont("altrR", opts[i]))
+		{
+			printf("ls: illegal option -- %c\n", opts[i]);
+			usage(2);
+		}
+		i++;
+	}
+}
+
+void		printfile(t_list *elem)
+{
+	printf("%s ", (char*)elem->content);
+}
+
+int		main(int argc, char **argv)
+{
+	t_args		*args;
+
+	args = parse_args(argc, argv);
+	checkopts(args->opts);
+	printf("Options: %s\n", args->opts);
+	printf("Files: ");
+	ft_lstiter(args->files, &printfile);
+	printf("\n");
 }

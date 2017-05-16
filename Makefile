@@ -6,7 +6,7 @@ LFT= -Llibft -lft
 DOBJS= objs
 DSRCS= srcs
 
-SRCS_FILES= main
+SRCS_FILES= main get_info
 
 SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))
 OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)
