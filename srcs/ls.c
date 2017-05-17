@@ -6,18 +6,24 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 20:02:34 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/17 18:13:49 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/17 19:21:37 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		print_file(char *name)
+char		*get_file_name_without_path(char *name)
 {
 	char	*slash;
 
 	if ((slash = ft_strrchr(name, '/')))
 		name = slash + 1;
+	return (name);
+}
+
+void		print_file(char *name)
+{
+	name = get_file_name_without_path(name);
 	printf("%s\n", name);
 }
 
@@ -27,7 +33,7 @@ void		process_dir(char *name, t_args *args)
 	t_args		*new_args;
 
 	printf("\n%s:\n", name);
-	files = get_dirfiles(name);
+	files = get_dirfiles(name, args);
 	IFRETURNVOID(!(new_args = (t_args*)malloc(sizeof(t_args))));
 	new_args->files = files;
 	new_args->is_first = 0;
@@ -35,12 +41,18 @@ void		process_dir(char *name, t_args *args)
 	ls(new_args);
 }
 
+int			is_current_or_parent(char *name)
+{
+	name = get_file_name_without_path(name);
+	return (ft_strequ(name, ".") || ft_strequ(name, ".."));
+}
+
 void		ft_btree_dirs(t_btree *b, t_args *args)
 {
 	t_file		*file;
 
 	file = (t_file*)b->content;
-	if (file->type == 'd')
+	if (file->type == 'd' && !is_current_or_parent(file->name))
 	{
 		if (args->is_first || ft_strcont(args->opts, 'R'))
 			process_dir(file->name, args);

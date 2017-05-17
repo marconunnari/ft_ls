@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/17 16:56:49 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/17 19:31:39 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ char			*get_groupname(long gid);
 char			*get_permissions(mode_t mode);
 t_args			*parse_args(int argc, char **argv);
 void			ls(t_args *args);
-int				ft_btree_cmp(t_btree *b1, t_btree *b2);
 t_btree			*parse_files(t_list *files);
-t_btree			*get_dirfiles(char *dirname);
+t_btree			*get_dirfiles(char *dirname, t_args *args);
+t_file			*get_file(char *name);
+int				ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts);
 void	ft_btree_apply_infix_ls(t_btree *root, t_args *args,
 		void (*applyf)(t_btree*, t_args *));
-t_file			*get_file(char *name);
+void	ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
+					int (*cmpf)(t_btree*, t_btree*, char*));
 #endif

@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_btree_cmp.c                                     :+:      :+:    :+:   */
+/*   ft_btreeadd_ls.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/16 22:27:04 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/17 19:30:56 by mnunnari         ###   ########.fr       */
+/*   Created: 2017/05/17 19:27:42 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/05/17 19:33:17 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-int			ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts)
+void	ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
+					int (*cmpf)(t_btree*, t_btree*, char*))
 {
-	t_file		*file1;
-	t_file		*file2;
-
-	file1 = (t_file*)b1->content;
-	file2 = (t_file*)b2->content;
-	if (ft_strcont(opts, 'r'))
-		return (ft_strcmp(file2->name, file1->name));
+	if (*root == NULL)
+		*root = new;
+	else if (cmpf(new, *root, opts) < 0)
+		ft_btreeadd_ls(&((*root)->left), new, opts, cmpf);
 	else
-		return (ft_strcmp(file1->name, file2->name));
+		ft_btreeadd_ls(&((*root)->right), new, opts, cmpf);
 }

@@ -6,13 +6,13 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:08:48 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/17 18:04:42 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/17 19:32:01 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_btree			*get_dirfiles(char *dirname)
+t_btree			*get_dirfiles(char *dirname, t_args *args)
 {
 	t_btree		*files;
 	t_btree		*file;
@@ -25,7 +25,7 @@ t_btree			*get_dirfiles(char *dirname)
 	struct dirent *entry;
 	while ((entry = readdir(dirp)))
 	{
-		if (entry->d_name[0] == '.')
+		if (entry->d_name[0] == '.' && !ft_strcont(args->opts, 'a'))
 			continue;
 		filename = ft_strjoin(dirname, entry->d_name);
 		IFNOTRETURN((tfile = get_file(filename)), NULL);
@@ -33,7 +33,7 @@ t_btree			*get_dirfiles(char *dirname)
 		if (files == NULL)
 			files = file;
 		else
-			ft_btreeadd(&files, file, &ft_btree_cmp);
+			ft_btreeadd_ls(&files, file, args->opts, &ft_btree_cmp);
 	}
 	closedir(dirp);
 	return (files);
