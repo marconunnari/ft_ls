@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/16 23:08:29 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/17 16:56:49 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@
 typedef struct	s_args
 {
 	char	*opts;
-	t_list	*files;
+	t_btree	*files;
+	int		is_first;
 }				t_args;
 
 typedef struct	s_file
@@ -56,6 +57,11 @@ char			*get_username(long uid);
 char			*get_groupname(long gid);
 char			*get_permissions(mode_t mode);
 t_args			*parse_args(int argc, char **argv);
-void			ls(t_args *args, int first);
-int			ft_btree_cmp(t_btree *b1, t_btree *b2);
+void			ls(t_args *args);
+int				ft_btree_cmp(t_btree *b1, t_btree *b2);
+t_btree			*parse_files(t_list *files);
+t_btree			*get_dirfiles(char *dirname);
+void	ft_btree_apply_infix_ls(t_btree *root, t_args *args,
+		void (*applyf)(t_btree*, t_args *));
+t_file			*get_file(char *name);
 #endif

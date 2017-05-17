@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/16 21:28:33 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/17 17:26:49 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ t_args			*init_args()
 {
 	t_args		*args;
 
-	args = (t_args*)malloc(sizeof(t_args));
+	IFNOTRETURN((args = (t_args*)malloc(sizeof(t_args))), NULL);
 	args->opts = ft_strnew(0);
 	args->files = NULL;
+	args->is_first = 1;
 	return (args);
 }
 
@@ -48,7 +49,8 @@ t_args			*parse_args(int argc, char **argv)
 {
 	int			i;
 	t_args		*args;
-	t_list		*file;
+	t_file		*tfile;
+	t_btree		*file;
 
 	i = 1;
 	args = init_args();
@@ -60,16 +62,18 @@ t_args			*parse_args(int argc, char **argv)
 	check_opts(args->opts);
 	while (i < argc)
 	{
-		IFRETURN(!(file = ft_lstnew(argv[i], ft_strlen(argv[i]) + 1)), NULL);
+		IFNOTRETURN((tfile = get_file(argv[i])), NULL);
+		IFNOTRETURN((file = ft_btreenew(tfile, sizeof(t_file))), NULL);
 		if (args->files == NULL)
 			args->files = file;
 		else
-			ft_lstadd(&args->files, file);
+			ft_btreeadd(&args->files, file, &ft_btree_cmp);
 		i++;
 	}
 	if (args->files == NULL)
 	{
-		IFRETURN(!(file = ft_lstnew(".", 2)), NULL);
+		IFNOTRETURN((tfile = get_file(".")), NULL);
+		IFNOTRETURN((file = ft_btreenew(tfile, sizeof(t_file))), NULL);
 		args->files = file;
 	}
 	return (args);

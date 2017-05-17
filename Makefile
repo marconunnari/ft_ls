@@ -6,7 +6,7 @@ LFT= -Llibft -lft
 DOBJS= objs
 DSRCS= srcs
 
-SRCS_FILES= main get_info parse_args ls ft_btree_cmp #new#
+SRCS_FILES= main get_info parse_args ls ft_btree_cmp parse_files get_dirfiles ft_btree_apply_infix_ls get_file #new#
 
 SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))
 OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)
