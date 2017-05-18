@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 20:02:34 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/17 19:21:37 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 15:04:35 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		print_dir(char *name, t_args *args)
 
 void		process_dir(char *name, t_args *args)
 {
-	if (args->with_files)
+	if (args->newline)
 		printf("\n");
 	printf("%s:\n", name);
 	print_dir(name, args);
@@ -64,17 +64,17 @@ void		ft_btree_dirs(t_btree *b, t_args *args)
 		if (args->is_first)
 		{
 			process_dir(file->name, args);
-			args->with_files = 1;
+			args->newline = 1;
 		}
 		else if (ft_strcont(args->opts, 'R'))
 		{
-			args->with_files = 1;
+			args->newline = 1;
 			process_dir(file->name, args);
 		}
 		else
 		{
 			print_file(file->name);
-			args->with_files = 1;
+			args->newline = 1;
 		}
 	}
 }
@@ -95,7 +95,7 @@ void		ft_btree_not_dirs(t_btree *b, t_args *args)
 	file = (t_file*)b->content;
 	if (file->type != 'd')
 	{
-		args->with_files = 1;
+		args->newline = 1;
 		print_file(file->name);
 	}
 }

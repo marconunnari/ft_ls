@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/17 19:29:57 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:44:45 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_args			*init_args()
 	args->opts = ft_strnew(0);
 	args->files = NULL;
 	args->is_first = 1;
-	args->with_files = 0;
+	args->newline = 0;
 	return (args);
 }
 

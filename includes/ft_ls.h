@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/17 19:31:39 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 16:54:49 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ typedef struct	s_args
 	char	*opts;
 	t_btree	*files;
 	int		is_first;
-	int		with_files;
+	int		newline;
 }				t_args;
 
 typedef struct	s_file
 {
 	char		*name;
 	char		type;
+	long		abs_secs;
+	long		abs_nsecs;
 /*	char		*permissions;
 	long		links;
 	char		*owner;
@@ -62,9 +64,9 @@ void			ls(t_args *args);
 t_btree			*parse_files(t_list *files);
 t_btree			*get_dirfiles(char *dirname, t_args *args);
 t_file			*get_file(char *name);
-int				ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts);
-void	ft_btree_apply_infix_ls(t_btree *root, t_args *args,
-		void (*applyf)(t_btree*, t_args *));
-void	ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
-					int (*cmpf)(t_btree*, t_btree*, char*));
+long			ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts);
+void			ft_btree_apply_infix_ls(t_btree *root, t_args *args,
+				void (*applyf)(t_btree*, t_args *));
+void			ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
+				long (*cmpf)(t_btree*, t_btree*, char*));
 #endif
