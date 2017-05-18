@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 16:54:49 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 19:03:49 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,19 @@ typedef struct	s_args
 	int		newline;
 }				t_args;
 
+typedef struct	timespec
+				t_time;
+
 typedef struct	s_file
 {
 	char		*name;
 	char		type;
-	long		abs_secs;
-	long		abs_nsecs;
-/*	char		*permissions;
+	char		*permissions;
 	long		links;
-	char		*owner;
+	char		*user;
 	char		*group;
 	long long	size;
-	int			day;
-	int			month;
-	int			hours;
-	int			minutes;*/
+	t_time		mtime;
 }				t_file;
 
 char			get_type(mode_t mode);
@@ -69,4 +67,6 @@ void			ft_btree_apply_infix_ls(t_btree *root, t_args *args,
 				void (*applyf)(t_btree*, t_args *));
 void			ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
 				long (*cmpf)(t_btree*, t_btree*, char*));
+void			print_file(t_file *file, t_args *args);
+char			*get_file_name_without_path(char *name);
 #endif

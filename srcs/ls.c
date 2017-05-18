@@ -6,26 +6,11 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 20:02:34 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 15:04:35 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 18:56:10 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-char		*get_file_name_without_path(char *name)
-{
-	char	*slash;
-
-	if ((slash = ft_strrchr(name, '/')))
-		name = slash + 1;
-	return (name);
-}
-
-void		print_file(char *name)
-{
-	name = get_file_name_without_path(name);
-	printf("%s\n", name);
-}
 
 void		print_dir(char *name, t_args *args)
 {
@@ -73,7 +58,7 @@ void		ft_btree_dirs(t_btree *b, t_args *args)
 		}
 		else
 		{
-			print_file(file->name);
+			print_file(file, args);
 			args->newline = 1;
 		}
 	}
@@ -85,7 +70,7 @@ void		ft_btree_all(t_btree *b, t_args *args)
 
 	(void)args;
 	file = (t_file*)b->content;
-	print_file(file->name);
+	print_file(file, args);
 }
 
 void		ft_btree_not_dirs(t_btree *b, t_args *args)
@@ -96,7 +81,7 @@ void		ft_btree_not_dirs(t_btree *b, t_args *args)
 	if (file->type != 'd')
 	{
 		args->newline = 1;
-		print_file(file->name);
+		print_file(file, args);
 	}
 }
 
