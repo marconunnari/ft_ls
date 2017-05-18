@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 20:02:34 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 18:56:10 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 20:03:14 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@ void		print_dir(char *name, t_args *args)
 	t_btree		*files;
 	t_args		*new_args;
 
-	files = get_dirfiles(name, args);
 	IFRETURNVOID(!(new_args = (t_args*)malloc(sizeof(t_args))));
+	new_args->opts = args->opts;
+	new_args->maxlinks = 0;
+	new_args->maxsize = 0;
+	new_args->blocks = 0;
+	files = get_dirfiles(name, new_args);
 	new_args->files = files;
 	new_args->is_first = 0;
-	new_args->opts = args->opts;
+	if (ft_strcont(new_args->opts, 'l'))
+		printf("total %lld\n", new_args->blocks);
 	ls(new_args);
 }
 

@@ -6,15 +6,27 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 18:29:37 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 20:02:58 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file			*get_file(char *name)
+static size_t		getlen(intmax_t n)
+{
+	int		size;
+
+	size = 1;
+	while (n /= 10)
+		size++;
+	return (size);
+}
+
+t_file			*get_file(char *name, t_args *args)
 {
 	t_file		*res;
+	int			linkslen;
+	int			sizelen;
 	struct stat	info;
 
 	stat(name, &info);
@@ -27,5 +39,12 @@ t_file			*get_file(char *name)
 	res->group = get_groupname((long)info.st_gid);
 	res->size = (long long)info.st_size;
 	res->mtime = info.st_mtimespec;
+	linkslen = getlen(res->links);
+	args->blocks += info.st_blocks;
+	if (linkslen > args->maxlinks)
+		args->maxlinks = linkslen;
+	sizelen = getlen(res->size);
+	if (sizelen > args->maxsize)
+		args->maxsize = sizelen;
 	return (res);
 }

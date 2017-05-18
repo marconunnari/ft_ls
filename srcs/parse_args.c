@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 16:44:45 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 19:55:35 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ t_args			*init_args()
 	args->files = NULL;
 	args->is_first = 1;
 	args->newline = 0;
+	args->maxlinks = 0;
+	args->maxsize = 0;
+	args->blocks = 0;
 	return (args);
 }
 
@@ -63,7 +66,7 @@ t_args			*parse_args(int argc, char **argv)
 	check_opts(args->opts);
 	while (i < argc)
 	{
-		IFNOTRETURN((tfile = get_file(argv[i])), NULL);
+		IFNOTRETURN((tfile = get_file(argv[i], args)), NULL);
 		IFNOTRETURN((file = ft_btreenew(tfile, sizeof(t_file))), NULL);
 		if (args->files == NULL)
 			args->files = file;

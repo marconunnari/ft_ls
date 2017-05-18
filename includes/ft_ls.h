@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 19:03:49 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 20:00:16 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@
 
 typedef struct	s_args
 {
-	char	*opts;
-	t_btree	*files;
-	int		is_first;
-	int		newline;
+	char		*opts;
+	t_btree		*files;
+	int			is_first;
+	int			newline;
+	int			maxlinks;
+	int			maxsize;
+	long long	blocks;
 }				t_args;
 
 typedef struct	timespec
@@ -61,7 +64,7 @@ t_args			*parse_args(int argc, char **argv);
 void			ls(t_args *args);
 t_btree			*parse_files(t_list *files);
 t_btree			*get_dirfiles(char *dirname, t_args *args);
-t_file			*get_file(char *name);
+t_file			*get_file(char *name, t_args *args);
 long			ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts);
 void			ft_btree_apply_infix_ls(t_btree *root, t_args *args,
 				void (*applyf)(t_btree*, t_args *));

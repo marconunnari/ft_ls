@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 18:04:05 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 19:03:27 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/18 19:36:07 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ void			print_normal(t_file *file)
 	printf("%s\n", name);
 }
 
-void			print_long(t_file *file)
+void			print_long(t_file *file, t_args *args)
 {
 	char	*mtime;
 
 	mtime = ctime((const long *)&file->mtime);
-	printf("%c%s %2ld %s  %s %4lld %2.2s %3.3s %5.5s %s\n", file->type, file->permissions,
-			file->links, file->user, file->group, file->size,
+	printf("%c%s %*ld %s  %s %*lld %2.2s %3.3s %5.5s %s\n",
+			file->type, file->permissions,
+			args->maxlinks + 1, file->links,
+			file->user, file->group,
+			args->maxsize + 1, file->size,
 			&mtime[8], &mtime[4], &mtime[11],
 			get_file_name_without_path(file->name));
 }
@@ -35,7 +38,7 @@ void			print_long(t_file *file)
 void			print_file(t_file *file, t_args *args)
 {
 	if (ft_strcont(args->opts, 'l'))
-		print_long(file);
+		print_long(file, args);
 	else
 		print_normal(file);
 }
