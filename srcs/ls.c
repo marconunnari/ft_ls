@@ -27,18 +27,25 @@ void		print_file(char *name)
 	printf("%s\n", name);
 }
 
-void		process_dir(char *name, t_args *args)
+void		print_dir(char *name, t_args *args)
 {
 	t_btree		*files;
 	t_args		*new_args;
 
-	printf("\n%s:\n", name);
 	files = get_dirfiles(name, args);
 	IFRETURNVOID(!(new_args = (t_args*)malloc(sizeof(t_args))));
 	new_args->files = files;
 	new_args->is_first = 0;
 	new_args->opts = args->opts;
 	ls(new_args);
+}
+
+void		process_dir(char *name, t_args *args)
+{
+	if (args->with_files)
+		printf("\n");
+	printf("%s:\n", name);
+	print_dir(name, args);
 }
 
 int			is_current_or_parent(char *name)
@@ -54,39 +61,85 @@ void		ft_btree_dirs(t_btree *b, t_args *args)
 	file = (t_file*)b->content;
 	if (file->type == 'd' && !is_current_or_parent(file->name))
 	{
-		if (args->is_first || ft_strcont(args->opts, 'R'))
+		if (args->is_first)
+		{
 			process_dir(file->name, args);
+			args->with_files = 1;
+		}
+		else if (ft_strcont(args->opts, 'R'))
+		{
+			args->with_files = 1;
+			process_dir(file->name, args);
+		}
 		else
+		{
 			print_file(file->name);
+			args->with_files = 1;
+		}
 	}
 }
 
 void		ft_btree_all(t_btree *b, t_args *args)
 {
+	t_file	*file;
+
 	(void)args;
-	t_file *file = (t_file*)b->content;
+	file = (t_file*)b->content;
 	print_file(file->name);
 }
 
 void		ft_btree_not_dirs(t_btree *b, t_args *args)
 {
-	(void)args;
-	t_file *file = (t_file*)b->content;
+	t_file	*file;
+
+	file = (t_file*)b->content;
 	if (file->type != 'd')
+	{
+		args->with_files = 1;
 		print_file(file->name);
+	}
+}
+
+int		onlyonedir(t_args *args)
+{
+	t_file	*file;
+
+	if (args->files->left || args->files->right)
+		return (0);
+	file = (t_file*)args->files->content;
+	if (file->type != 'd')
+		return (0);
+	return (1);
+}
+
+void		first_call_multiple_files(t_args *args)
+{
+	ft_btree_apply_infix_ls(args->files, args, &ft_btree_not_dirs);
+	ft_btree_apply_infix_ls(args->files, args, &ft_btree_dirs);
+}
+
+void		first_call(t_args *args)
+{
+	if (args->files == NULL)
+		print_dir(".", args);
+	else if (onlyonedir(args))
+		print_dir(((t_file*)args->files->content)->name, args);
+	else
+		first_call_multiple_files(args);
+
+}
+
+void		not_first_call(t_args *args)
+{
+	ft_btree_apply_infix_ls(args->files, args, &ft_btree_all);
+	if (ft_strcont(args->opts, 'R'))
+		ft_btree_apply_infix_ls(args->files, args, &ft_btree_dirs);
 }
 
 void			ls(t_args *args)
 {
 	if (args->is_first)
-	{
-		ft_btree_apply_infix_ls(args->files, args, ft_btree_not_dirs);
-		ft_btree_apply_infix_ls(args->files, args, &ft_btree_dirs);
-	}
+		first_call(args);
 	else
-	{
-		ft_btree_apply_infix_ls(args->files, args, &ft_btree_all);
-		if (ft_strcont(args->opts, 'R'))
-			ft_btree_apply_infix_ls(args->files, args, &ft_btree_dirs);
-	}
+		not_first_call(args);
 }

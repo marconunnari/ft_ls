@@ -42,6 +42,7 @@ t_args			*init_args()
 	args->opts = ft_strnew(0);
 	args->files = NULL;
 	args->is_first = 1;
+	args->with_files = 0;
 	return (args);
 }
 
@@ -69,12 +70,6 @@ t_args			*parse_args(int argc, char **argv)
 		else
 			ft_btreeadd_ls(&args->files, file, args->opts, &ft_btree_cmp);
 		i++;
-	}
-	if (args->files == NULL)
-	{
-		IFNOTRETURN((tfile = get_file(".")), NULL);
-		IFNOTRETURN((file = ft_btreenew(tfile, sizeof(t_file))), NULL);
-		args->files = file;
 	}
 	return (args);
 }

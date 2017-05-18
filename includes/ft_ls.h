@@ -35,6 +35,7 @@ typedef struct	s_args
 	char	*opts;
 	t_btree	*files;
 	int		is_first;
+	int		with_files;
 }				t_args;
 
 typedef struct	s_file
