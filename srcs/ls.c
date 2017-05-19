@@ -22,6 +22,7 @@ void		print_dir(char *name, t_args *args)
 	new_args->maxlinks = 0;
 	new_args->maxsize = 0;
 	new_args->blocks = 0;
+	new_args->considerdirsize = 1;
 	files = get_dirfiles(name, new_args);
 	new_args->files = files;
 	new_args->is_first = 0;

@@ -45,6 +45,7 @@ t_args			*init_args()
 	args->newline = 0;
 	args->maxlinks = 0;
 	args->maxsize = 0;
+	args->considerdirsize = 0;
 	args->blocks = 0;
 	return (args);
 }

@@ -38,6 +38,7 @@ typedef struct	s_args
 	int			newline;
 	int			maxlinks;
 	int			maxsize;
+	int			considerdirsize;
 	long long	blocks;
 }				t_args;
 

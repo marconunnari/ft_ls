@@ -48,7 +48,7 @@ t_file			*get_file(char *name, t_args *args)
 	if (linkslen > args->maxlinks)
 		args->maxlinks = linkslen;
 	sizelen = getlen(res->size);
-	if (sizelen > args->maxsize)
+	if (sizelen > args->maxsize && (args->considerdirsize || res->type != 'd'))
 		args->maxsize = sizelen;
 	return (res);
 }
