@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 20:00:16 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/19 17:47:04 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void			ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
 				long (*cmpf)(t_btree*, t_btree*, char*));
 void			print_file(t_file *file, t_args *args);
 char			*get_file_name_without_path(char *name);
+void			error(char *name);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 20:02:34 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 20:03:14 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/19 19:37:49 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		print_dir(char *name, t_args *args)
 	files = get_dirfiles(name, new_args);
 	new_args->files = files;
 	new_args->is_first = 0;
-	if (ft_strcont(new_args->opts, 'l'))
+	if (files && ft_strcont(new_args->opts, 'l'))
 		printf("total %lld\n", new_args->blocks);
 	ls(new_args);
 }
@@ -49,6 +49,8 @@ void		ft_btree_dirs(t_btree *b, t_args *args)
 	t_file		*file;
 
 	file = (t_file*)b->content;
+	if (file == NULL)
+		return ;
 	if (file->type == 'd' && !is_current_or_parent(file->name))
 	{
 		if (args->is_first)
@@ -73,8 +75,9 @@ void		ft_btree_all(t_btree *b, t_args *args)
 {
 	t_file	*file;
 
-	(void)args;
 	file = (t_file*)b->content;
+	if (file == NULL)
+		return ;
 	print_file(file, args);
 }
 
@@ -83,6 +86,8 @@ void		ft_btree_not_dirs(t_btree *b, t_args *args)
 	t_file	*file;
 
 	file = (t_file*)b->content;
+	if (file == NULL)
+		return ;
 	if (file->type != 'd')
 	{
 		args->newline = 1;
@@ -112,6 +117,8 @@ void		first_call(t_args *args)
 {
 	if (args->files == NULL)
 		print_dir(".", args);
+	else if (args->files->content == NULL)
+		return ;
 	else if (onlyonedir(args))
 		print_dir(((t_file*)args->files->content)->name, args);
 	else

@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 22:27:04 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 18:26:43 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/19 17:59:03 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ long		ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts)
 
 	file1 = (t_file*)b1->content;
 	file2 = (t_file*)b2->content;
+	if (file1 == NULL || file2 == NULL)
+		return (0);
 	if (ft_strcont(opts, 't'))
 	{
 		res = file2->mtime.tv_sec - file1->mtime.tv_sec;

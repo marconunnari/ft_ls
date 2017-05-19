@@ -6,13 +6,13 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/18 20:02:58 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/19 20:35:30 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static size_t		getlen(intmax_t n)
+static size_t	getlen(intmax_t n)
 {
 	int		size;
 
@@ -29,7 +29,11 @@ t_file			*get_file(char *name, t_args *args)
 	int			sizelen;
 	struct stat	info;
 
-	stat(name, &info);
+	if (stat(name, &info) == -1)
+	{
+		error(name);
+		return (NULL);
+	}
 	IFNOTRETURN((res = (t_file*)malloc(sizeof(t_file))), NULL);
 	res->name = name;
 	res->type = get_type(info.st_mode);
