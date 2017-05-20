@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/19 17:47:04 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/20 22:25:10 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct	s_file
 	t_time		mtime;
 }				t_file;
 
-char			get_type(mode_t mode);
+char			get_file_type(mode_t mode);
 char			*get_username(long uid);
 char			*get_groupname(long gid);
 char			*get_permissions(mode_t mode);

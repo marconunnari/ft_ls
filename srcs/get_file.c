@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/19 20:35:30 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/20 22:29:43 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ t_file			*get_file(char *name, t_args *args)
 		error(name);
 		return (NULL);
 	}
-	IFNOTRETURN((res = (t_file*)malloc(sizeof(t_file))), NULL);
+	if (!(res = (t_file*)malloc(sizeof(t_file))))
+		return (NULL);
 	res->name = name;
-	res->type = get_type(info.st_mode);
+	res->type = get_file_type(info.st_mode);
 	res->permissions = get_permissions(info.st_mode);
 	res->links = (long)info.st_nlink;
 	res->user = get_username((long)info.st_uid);

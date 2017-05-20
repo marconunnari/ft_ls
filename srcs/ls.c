@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 20:02:34 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/19 19:37:49 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/20 22:29:06 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void		print_dir(char *name, t_args *args)
 	t_btree		*files;
 	t_args		*new_args;
 
-	IFRETURNVOID(!(new_args = (t_args*)malloc(sizeof(t_args))));
+	if (!(new_args = (t_args*)malloc(sizeof(t_args))))
+		return ;
 	new_args->opts = args->opts;
 	new_args->maxlinks = 0;
 	new_args->maxsize = 0;

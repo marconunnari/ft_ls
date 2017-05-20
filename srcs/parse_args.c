@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/19 17:56:07 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/20 22:30:47 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ t_args			*init_args()
 {
 	t_args		*args;
 
-	IFNOTRETURN((args = (t_args*)malloc(sizeof(t_args))), NULL);
+	if (!(args = (t_args*)malloc(sizeof(t_args))))
+		return (NULL);
 	args->opts = ft_strnew(0);
 	args->files = NULL;
 	args->is_first = 1;
@@ -61,14 +62,15 @@ t_args			*parse_args(int argc, char **argv)
 	args = init_args();
 	while (i < argc && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
 	{
-		REASSIGN(args->opts, ft_strjoin(args->opts, &argv[i][1]));
+		args->opts = ft_strmerge(args->opts, ft_strdup(&argv[i][1]));
 		i++;
 	}
 	check_opts(args->opts);
 	while (i < argc)
 	{
 		tfile = get_file(argv[i++], args);
-		IFNOTRETURN((file = ft_btreenew(tfile, sizeof(t_file))), NULL);
+		if (!(file = ft_btreenew(tfile, sizeof(t_file))))
+			return (NULL);
 		if (args->files == NULL)
 			args->files = file;
 		else
