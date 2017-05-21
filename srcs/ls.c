@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 20:02:34 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/20 22:29:06 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/21 23:40:09 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void		print_dir(char *name, t_args *args)
 	new_args->maxsize = 0;
 	new_args->blocks = 0;
 	new_args->considerdirsize = 1;
+	new_args->is_first = 0;
 	files = get_dirfiles(name, new_args);
 	new_args->files = files;
-	new_args->is_first = 0;
 	if (files && ft_strcont(new_args->opts, 'l'))
 		printf("total %lld\n", new_args->blocks);
 	ls(new_args);
@@ -42,7 +42,7 @@ void		process_dir(char *name, t_args *args)
 
 int			is_current_or_parent(char *name)
 {
-	name = get_file_name_without_path(name);
+	name = removepath(name);
 	return (ft_strequ(name, ".") || ft_strequ(name, ".."));
 }
 

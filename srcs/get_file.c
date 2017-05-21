@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/20 22:29:43 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/21 23:30:41 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ t_file			*get_file(char *name, t_args *args)
 	int			sizelen;
 	struct stat	info;
 
-	if (stat(name, &info) == -1)
+	if (lstat(name, &info) == -1)
 	{
-		error(name);
+		error(name, args);
 		return (NULL);
 	}
 	if (!(res = (t_file*)malloc(sizeof(t_file))))

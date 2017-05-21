@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 18:49:00 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/20 22:29:56 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/21 22:49:02 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char		get_file_type(mode_t mode)
 		return ('d');
 	if (ft == S_IFREG)
 		return ('-');
+	if (ft == S_IFLNK)
+		return ('l');
 	return (0);
 }
 

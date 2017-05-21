@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/20 22:25:10 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/21 23:30:21 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <time.h>
 # include <pwd.h>
 # include <grp.h>
+# include <limits.h>
 
 # ifndef __APPLE__
 #  define st_atimespec            st_atim
@@ -72,6 +73,6 @@ void			ft_btree_apply_infix_ls(t_btree *root, t_args *args,
 void			ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
 				long (*cmpf)(t_btree*, t_btree*, char*));
 void			print_file(t_file *file, t_args *args);
-char			*get_file_name_without_path(char *name);
-void			error(char *name);
+char			*removepath(char *name);
+void			error(char *filename, t_args *args);
 #endif

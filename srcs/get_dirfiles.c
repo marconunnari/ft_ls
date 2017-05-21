@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:08:48 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/19 20:36:11 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/21 23:30:52 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_btree			*get_dirfiles(char *dirname, t_args *args)
 	DIR *dirp = opendir(dirname);
 	if (dirp == NULL)
 	{
-		error(dirname);
+		error(dirname, args);
 		return (NULL);
 	}
 	struct dirent *entry;
@@ -33,9 +33,10 @@ t_btree			*get_dirfiles(char *dirname, t_args *args)
 		if (entry->d_name[0] == '.' && !ft_strcont(args->opts, 'a'))
 			continue;
 		filename = ft_strjoin(dirname, entry->d_name);
-		if(!(tfile = get_file(filename, args)))
+		if (!(tfile = get_file(filename, args)))
 			continue;
-		IFNOTRETURN((file = ft_btreenew(tfile, sizeof(t_file))), NULL);
+		if (!(file = ft_btreenew(tfile, sizeof(t_file))))
+			return (NULL);
 		if (files == NULL)
 			files = file;
 		else
