@@ -22,9 +22,8 @@ void			print_normal(t_file *file, t_args *args)
 	printf("%s\n", name);
 }
 
-void			print_long(t_file *file, t_args *args)
+void			l_name(t_file *file, t_args *args)
 {
-	char	*mtime;
 	char	*name;
 
 	if (file->type == 'l')
@@ -35,15 +34,52 @@ void			print_long(t_file *file, t_args *args)
 		name = ft_strjoin(removepath(file->name), name);
 	}
 	else
-		name = removepath(file->name);
+	{
+		if (!args->is_first)
+			name = removepath(file->name);
+		else
+			name = file->name;
+	}
+	printf(" %s", name);
+}
+
+void			l_mtime(t_file *file)
+{
+	char	*mtime;
+	time_t	currtime;
+
+	currtime = time(0);
 	mtime = ctime((const long *)&file->mtime);
-	printf("%c%s %*ld %s  %s %*lld %2.2s %3.3s %5.5s %s\n",
-			file->type, file->permissions,
-			args->maxlinks + 1, file->links,
-			file->user, file->group,
-			args->maxsize + 1, file->size,
-			&mtime[8], &mtime[4], &mtime[11],
-			name);
+	if (currtime - file->mtime.tv_sec > 15770000
+			|| currtime - file->mtime.tv_sec < -15770000)
+		printf(" %2.2s %3.3s  %4.4s", &mtime[8], &mtime[4], &mtime[20]);
+	else
+		printf(" %2.2s %3.3s %5.5s", &mtime[8], &mtime[4], &mtime[11]);
+}
+
+void			l_size(t_file *file, t_args *args)
+{
+	if (file->type == 'c' || file->type == 'b')
+	{
+		printf(" %ld, %ld",
+			(long)major(file->devtype),
+			(long)minor(file->devtype));
+	}
+	else
+		printf(" %*lld", args->maxsize + 1, file->size);
+}
+
+void			print_long(t_file *file, t_args *args)
+{
+	printf("%c%s %*ld %-*s  %-*s",
+		file->type, file->permissions,
+		args->maxlinks + 1, file->links,
+		args->maxuser, file->user,
+		args->maxgroup, file->group);
+	l_size(file, args);
+	l_mtime(file);
+	l_name(file, args);
+	printf("\n");
 }
 
 void			print_file(t_file *file, t_args *args)

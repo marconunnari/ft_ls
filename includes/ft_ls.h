@@ -38,6 +38,8 @@ typedef struct	s_args
 	int			is_first;
 	int			newline;
 	int			maxlinks;
+	int			maxuser;
+	int			maxgroup;
 	int			maxsize;
 	int			considerdirsize;
 	long long	blocks;
@@ -56,6 +58,7 @@ typedef struct	s_file
 	char		*group;
 	long long	size;
 	t_time		mtime;
+	dev_t		devtype;
 }				t_file;
 
 char			get_file_type(mode_t mode);

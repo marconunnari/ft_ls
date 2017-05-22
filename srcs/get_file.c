@@ -26,6 +26,8 @@ t_file			*get_file(char *name, t_args *args)
 {
 	t_file		*res;
 	int			linkslen;
+	int			userlen;
+	int			grouplen;
 	int			sizelen;
 	struct stat	info;
 
@@ -44,10 +46,17 @@ t_file			*get_file(char *name, t_args *args)
 	res->group = get_groupname((long)info.st_gid);
 	res->size = (long long)info.st_size;
 	res->mtime = info.st_mtimespec;
+	res->devtype = info.st_rdev;
+	args->blocks += (long long)info.st_blocks;
 	linkslen = getlen(res->links);
-	args->blocks += info.st_blocks;
 	if (linkslen > args->maxlinks)
 		args->maxlinks = linkslen;
+	userlen = ft_strlen(res->user);
+	if (userlen > args->maxuser)
+		args->maxuser = userlen;
+	grouplen = ft_strlen(res->group);
+	if (grouplen > args->maxgroup)
+		args->maxgroup = grouplen;
 	sizelen = getlen(res->size);
 	if (sizelen > args->maxsize && (args->considerdirsize || res->type != 'd'))
 		args->maxsize = sizelen;

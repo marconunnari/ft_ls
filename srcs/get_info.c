@@ -28,7 +28,7 @@ char		get_file_type(mode_t mode)
 	else if (ft == S_IFSOCK)
 		return ('s');
 	else if (ft == S_IFIFO)
-		return ('f');
+		return ('p');
 	else
 		return ('-');
 	return (0);

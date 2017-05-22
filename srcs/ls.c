@@ -21,6 +21,8 @@ void		print_dir(char *name, t_args *args)
 		return ;
 	new_args->opts = args->opts;
 	new_args->maxlinks = 0;
+	new_args->maxuser = 0;
+	new_args->maxgroup = 0;
 	new_args->maxsize = 0;
 	new_args->blocks = 0;
 	new_args->considerdirsize = 1;
