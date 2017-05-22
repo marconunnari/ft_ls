@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 18:49:00 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/21 22:49:02 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/22 19:29:40 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,18 @@ char		get_file_type(mode_t mode)
 	ft = mode & S_IFMT;
 	if (ft == S_IFDIR)
 		return ('d');
-	if (ft == S_IFREG)
-		return ('-');
-	if (ft == S_IFLNK)
+	else if (ft == S_IFLNK)
 		return ('l');
+	else if (ft == S_IFCHR)
+		return ('c');
+	else if (ft == S_IFBLK)
+		return ('b');
+	else if (ft == S_IFSOCK)
+		return ('s');
+	else if (ft == S_IFIFO)
+		return ('f');
+	else
+		return ('-');
 	return (0);
 }
 
@@ -42,6 +50,7 @@ char		*get_groupname(long gid)
 	return (grp->gr_name);
 }
 
+
 char		*get_permissions(mode_t mode)
 {
 	char		*permissions;
@@ -49,12 +58,21 @@ char		*get_permissions(mode_t mode)
 	permissions = ft_strnew(10);
 	permissions[0] = mode & S_IRUSR ? 'r' : '-';
 	permissions[1] = mode & S_IWUSR ? 'w' : '-';
-	permissions[2] = mode & S_IXUSR ? 'x' : '-';
+	if (mode & S_ISUID)
+		permissions[2] = mode & S_IXUSR ? 's' : 'S';
+	else
+		permissions[2] = mode & S_IXUSR ? 'x' : '-';
 	permissions[3] = mode & S_IRGRP ? 'r' : '-';
 	permissions[4] = mode & S_IWGRP ? 'w' : '-';
-	permissions[5] = mode & S_IXGRP ? 'x' : '-';
+	if (mode & S_ISGID)
+		permissions[5] = mode & S_IXGRP ? 's' : 'S';
+	else
+		permissions[5] = mode & S_IXGRP ? 'x' : '-';
 	permissions[6] = mode & S_IROTH ? 'r' : '-';
 	permissions[7] = mode & S_IWOTH ? 'w' : '-';
-	permissions[8] = mode & S_IXOTH ? 'x' : '-';
+	if (mode & S_ISVTX)
+		permissions[8] = mode & S_IXOTH ? 't' : 'T';
+	else
+		permissions[8] = mode & S_IXOTH ? 'x' : '-';
 	return (permissions);
 }
