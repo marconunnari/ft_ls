@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:46:12 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 19:46:43 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/23 21:05:19 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void			l_size(t_file *file, t_args *args)
 {
 	if (file->type == 'c' || file->type == 'b')
 	{
-		printf(" %ld, %ld",
+		printf("    %ld, %ld",
 			(long)major(file->devtype),
 			(long)minor(file->devtype));
 	}
