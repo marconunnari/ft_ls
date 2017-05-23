@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/21 23:30:41 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/23 19:44:50 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,30 @@ static size_t	getlen(intmax_t n)
 	return (size);
 }
 
-t_file			*get_file(char *name, t_args *args)
+void			set_lengths(t_args *args, t_file *tfile)
 {
-	t_file		*res;
 	int			linkslen;
 	int			userlen;
 	int			grouplen;
 	int			sizelen;
+
+	linkslen = getlen(tfile->links);
+	if (linkslen > args->maxlinks)
+		args->maxlinks = linkslen;
+	userlen = ft_strlen(tfile->user);
+	if (userlen > args->maxuser)
+		args->maxuser = userlen;
+	grouplen = ft_strlen(tfile->group);
+	if (grouplen > args->maxgroup)
+		args->maxgroup = grouplen;
+	sizelen = getlen(tfile->size);
+	if (sizelen > args->maxsize && (args->considerdirsize || tfile->type != 'd'))
+		args->maxsize = sizelen;
+}
+
+t_file			*get_file(char *name, t_args *args)
+{
+	t_file		*tfile;
 	struct stat	info;
 
 	if (lstat(name, &info) == -1)
@@ -36,29 +53,18 @@ t_file			*get_file(char *name, t_args *args)
 		error(name, args);
 		return (NULL);
 	}
-	if (!(res = (t_file*)malloc(sizeof(t_file))))
+	if (!(tfile = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
-	res->name = name;
-	res->type = get_file_type(info.st_mode);
-	res->permissions = get_permissions(info.st_mode);
-	res->links = (long)info.st_nlink;
-	res->user = get_username((long)info.st_uid);
-	res->group = get_groupname((long)info.st_gid);
-	res->size = (long long)info.st_size;
-	res->mtime = info.st_mtimespec;
-	res->devtype = info.st_rdev;
+	tfile->name = name;
+	tfile->type = get_file_type(info.st_mode);
+	tfile->permissions = get_permissions(info.st_mode);
+	tfile->links = (long)info.st_nlink;
+	tfile->user = get_username((long)info.st_uid);
+	tfile->group = get_groupname((long)info.st_gid);
+	tfile->size = (long long)info.st_size;
+	tfile->mtime = info.st_mtimespec;
+	tfile->devtype = info.st_rdev;
 	args->blocks += (long long)info.st_blocks;
-	linkslen = getlen(res->links);
-	if (linkslen > args->maxlinks)
-		args->maxlinks = linkslen;
-	userlen = ft_strlen(res->user);
-	if (userlen > args->maxuser)
-		args->maxuser = userlen;
-	grouplen = ft_strlen(res->group);
-	if (grouplen > args->maxgroup)
-		args->maxgroup = grouplen;
-	sizelen = getlen(res->size);
-	if (sizelen > args->maxsize && (args->considerdirsize || res->type != 'd'))
-		args->maxsize = sizelen;
-	return (res);
+	set_lengths(args, tfile);
+	return (tfile);
 }

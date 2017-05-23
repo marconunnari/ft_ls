@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_btree_cmp.c                                     :+:      :+:    :+:   */
+/*   ft_btree_cmp_ls.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/16 22:27:04 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/19 17:59:03 by mnunnari         ###   ########.fr       */
+/*   Created: 2017/05/23 19:31:08 by mnunnari          #+#    #+#             */
+/*   Updated: 2017/05/23 19:31:09 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-long		ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts)
+long		ft_btree_cmp_ls(t_btree *b1, t_btree *b2, char *opts)
 {
 	t_file		*file1;
 	t_file		*file2;

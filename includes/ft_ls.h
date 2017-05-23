@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/21 23:30:21 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/23 19:31:23 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			ls(t_args *args);
 t_btree			*parse_files(t_list *files);
 t_btree			*get_dirfiles(char *dirname, t_args *args);
 t_file			*get_file(char *name, t_args *args);
-long			ft_btree_cmp(t_btree *b1, t_btree *b2, char *opts);
+long			ft_btree_cmp_ls(t_btree *b1, t_btree *b2, char *opts);
 void			ft_btree_apply_infix_ls(t_btree *root, t_args *args,
 				void (*applyf)(t_btree*, t_args *));
 void			ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
@@ -78,4 +78,9 @@ void			ft_btreeadd_ls(t_btree **root, t_btree *new, char *opts,
 void			print_file(t_file *file, t_args *args);
 char			*removepath(char *name);
 void			error(char *filename, t_args *args);
+void			print_dir(char *name, t_args *args);
+void			ft_btree_not_dirs(t_btree *b, t_args *args);
+void			ft_btree_dirs(t_btree *b, t_args *args);
+void			ft_btree_all(t_btree *b, t_args *args);
+void			print_long(t_file *file, t_args *args);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/20 22:30:47 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/23 19:31:48 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_args			*parse_args(int argc, char **argv)
 		if (args->files == NULL)
 			args->files = file;
 		else
-			ft_btreeadd_ls(&args->files, file, args->opts, &ft_btree_cmp);
+			ft_btreeadd_ls(&args->files, file, args->opts, &ft_btree_cmp_ls);
 	}
 	return (args);
 }
