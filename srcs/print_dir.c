@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:20:22 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 19:21:58 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/24 15:18:18 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		print_dir(char *name, t_args *args)
 
 	if (!(new_args = (t_args*)malloc(sizeof(t_args))))
 		return ;
-	new_args->opts = args->opts;
+	new_args->opts = ft_strdup(args->opts);
 	new_args->maxlinks = 0;
 	new_args->maxuser = 0;
 	new_args->maxgroup = 0;

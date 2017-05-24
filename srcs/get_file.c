@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 21:27:00 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/24 16:16:35 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_file			*get_file(char *name, t_args *args)
 		return (NULL);
 	if (!(tfile = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
-	tfile->name = name;
+	tfile->name = ft_strdup(name);
 	tfile->type = get_file_type(info.st_mode);
 	tfile->permissions = get_permissions(info.st_mode);
 	tfile->links = (long)info.st_nlink;

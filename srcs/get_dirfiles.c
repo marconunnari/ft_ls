@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:08:48 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 19:42:11 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/24 15:45:35 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int				parse_entry(char *dirname, t_args *args,
 	filename = ft_strjoin(dirname, entry->d_name);
 	if (!(tfile = get_file(filename, args)))
 		return (1);
+	free(filename);
 	if (!(file = ft_btreenew(tfile, sizeof(t_file))))
 		return (0);
+	free(tfile);
 	if (files == NULL)
 		*files = file;
 	else
@@ -51,6 +53,7 @@ t_btree			*get_dirfiles(char *dirname, t_args *args)
 		if (parse_entry(dirname, args, entry, &files) == 0)
 			return (0);
 	}
+	free(dirname);
 	closedir(dirp);
 	return (files);
 }

@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 19:31:48 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/24 15:05:20 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ t_args			*parse_args(int argc, char **argv)
 		tfile = get_file(argv[i++], args);
 		if (!(file = ft_btreenew(tfile, sizeof(t_file))))
 			return (NULL);
+		free(tfile);
 		if (args->files == NULL)
 			args->files = file;
 		else
