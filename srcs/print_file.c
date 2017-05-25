@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 18:04:05 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 19:47:23 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/25 18:41:32 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void			print_normal(t_file *file, t_args *args)
 	name = file->name;
 	if (!args->is_first)
 		name = removepath(name);
-	printf("%s\n", name);
+	ft_printf("%s\n", name);
 }
 
 void			print_file(t_file *file, t_args *args)

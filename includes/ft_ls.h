@@ -6,14 +6,12 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 19:31:23 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/26 00:13:24 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
-
-# include <stdio.h>
 
 # include "libft.h"
 # include <dirent.h>

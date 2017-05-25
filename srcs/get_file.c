@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/24 16:16:35 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/26 00:01:53 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ int			get_stat(char *name, t_args *args, struct stat *info)
 			&& args->is_first && !ft_strcont(args->opts, 'l'))
 	{
 		if (stat(name, info) == -1)
-		{
-			error(name, args);
-			return (0);
-		}
+			lstat(name, info);
 	}
 	return (1);
 }

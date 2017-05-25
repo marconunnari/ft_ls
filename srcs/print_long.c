@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:46:12 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/23 21:05:19 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/25 23:36:41 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			l_name(t_file *file, t_args *args)
 		else
 			name = file->name;
 	}
-	printf(" %s", name);
+	ft_printf(" %s", name);
 }
 
 void			l_mtime(t_file *file)
@@ -43,28 +43,28 @@ void			l_mtime(t_file *file)
 
 	currtime = time(0);
 	mtime = ctime((const long *)&file->mtime);
-	if (currtime - file->mtime.tv_sec > 15770000
-			|| currtime - file->mtime.tv_sec < -15770000)
-		printf(" %2.2s %3.3s  %4.4s", &mtime[8], &mtime[4], &mtime[20]);
+	//ft_printf("---- %s --- ", mtime);
+	if (file->mtime.tv_sec - currtime > 15770000 || currtime - file->mtime.tv_sec > 15770000)
+		ft_printf(" %3.3s %2.2s  %-4.5s", &mtime[4], &mtime[8], ft_strtrim(&mtime[20]));
 	else
-		printf(" %2.2s %3.3s %5.5s", &mtime[8], &mtime[4], &mtime[11]);
+		ft_printf(" %3.3s %2.2s %5.5s", &mtime[4], &mtime[8], &mtime[11]);
 }
 
 void			l_size(t_file *file, t_args *args)
 {
 	if (file->type == 'c' || file->type == 'b')
 	{
-		printf("    %ld, %ld",
+		ft_printf("    %ld, %ld",
 			(long)major(file->devtype),
 			(long)minor(file->devtype));
 	}
 	else
-		printf(" %*lld", args->maxsize + 1, file->size);
+		ft_printf(" %*lld", args->maxsize + 1, file->size);
 }
 
 void			print_long(t_file *file, t_args *args)
 {
-	printf("%c%s %*ld %-*s  %-*s",
+	ft_printf("%c%s %*ld %-*s  %-*s",
 		file->type, file->permissions,
 		args->maxlinks + 1, file->links,
 		args->maxuser, file->user,
@@ -72,5 +72,5 @@ void			print_long(t_file *file, t_args *args)
 	l_size(file, args);
 	l_mtime(file);
 	l_name(file, args);
-	printf("\n");
+	ft_printf("\n");
 }

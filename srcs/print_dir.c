@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:20:22 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/24 15:18:18 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/25 18:41:13 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void		print_dir(char *name, t_args *args)
 	files = get_dirfiles(name, new_args);
 	new_args->files = files;
 	if (files && ft_strcont(new_args->opts, 'l'))
-		printf("total %lld\n", new_args->blocks);
+		ft_printf("total %lld\n", new_args->blocks);
 	ls(new_args);
 }

@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/24 15:05:20 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/26 00:14:29 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void		usage(int code)
 {
-	printf("%s\n", "usage: ft_ls [-Ralrt] [file ...]");
+	//ft_printf("%s\n", "usage: ft_ls [-Ralrt] [file ...]");
+	dprintf(2, "%s\n", "usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]");
 	exit(code);
 }
 
@@ -25,10 +26,11 @@ void		check_opts(char *opts)
 	i = 0;
 	while (opts[i])
 	{
-		if(!ft_strcont("altrR", opts[i]))
+		if(!ft_strcont("altrR1", opts[i]))
 		{
-			printf("ls: illegal option -- %c\n", opts[i]);
-			usage(2);
+			//ft_printf("ls: illegal option -- %c\n", opts[i]);
+			dprintf(2, "/bin/ls: illegal option -- %c\n", opts[i]);
+			usage(1);
 		}
 		i++;
 	}
@@ -64,7 +66,8 @@ t_args			*parse_args(int argc, char **argv)
 	args = init_args();
 	while (i < argc && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
 	{
-		args->opts = ft_strmerge(args->opts, ft_strdup(&argv[i][1]));
+		if (!(ft_strlen(argv[i]) == 2 && argv[i][1] == '-'))
+			args->opts = ft_strmerge(args->opts, ft_strdup(&argv[i][1]));
 		i++;
 	}
 	check_opts(args->opts);
