@@ -13,10 +13,9 @@
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# include <stdio.h>
-
 # include "libft.h"
 # include <dirent.h>
+# include <stdio.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <time.h>

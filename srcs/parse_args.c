@@ -14,8 +14,7 @@
 
 void		usage(int code)
 {
-	//ft_printf("%s\n", "usage: ft_ls [-Ralrt] [file ...]");
-	dprintf(2, "%s\n", "usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]");
+	ft_dprintf(2, "%s\n", "usage: ft_ls [-Ralrt] [file ...]");
 	exit(code);
 }
 
@@ -28,8 +27,7 @@ void		check_opts(char *opts)
 	{
 		if(!ft_strcont("altrR1", opts[i]))
 		{
-			//ft_printf("ls: illegal option -- %c\n", opts[i]);
-			dprintf(2, "/bin/ls: illegal option -- %c\n", opts[i]);
+			ft_dprintf(2, "ls: illegal option -- %c\n", opts[i]);
 			usage(1);
 		}
 		i++;
