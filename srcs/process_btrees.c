@@ -50,7 +50,9 @@ void		ft_btree_dirs(t_btree *b, t_args *args)
 			print_file(file, args);
 			args->newline = 1;
 		}
-		else ;
+		else
+		{
+		}
 	}
 }
 

@@ -64,10 +64,12 @@ t_file			*get_file(char *name, t_args *args)
 	t_file		*tfile;
 	struct stat	info;
 
-	if (!get_stat(name, args, &info))
-		return (NULL);
 	if (!(tfile = (t_file*)malloc(sizeof(t_file))))
 		return (NULL);
+	tfile->name = NULL;
+	tfile->type = '\0';
+	if (!get_stat(name, args, &info))
+		return (tfile);
 	tfile->name = ft_strdup(name);
 	tfile->type = get_file_type(info.st_mode);
 	tfile->permissions = get_permissions(info.st_mode);

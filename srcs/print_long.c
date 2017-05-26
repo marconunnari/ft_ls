@@ -47,7 +47,7 @@ void			l_mtime(t_file *file)
 	if (file->mtime.tv_sec - currtime > 15770000 || currtime - file->mtime.tv_sec > 15770000)
 		ft_printf(" %3.3s %2.2s  %-4.5s", &mtime[4], &mtime[8], ft_strtrim(&mtime[20]));
 	else
-		ft_printf(" %3.3s %2.2s %5.5s", &mtime[4], &mtime[8], &mtime[11]);
+		ft_printf(" %2.2s %3.3s %5.5s", &mtime[8], &mtime[4], &mtime[11]);
 }
 
 void			l_size(t_file *file, t_args *args)

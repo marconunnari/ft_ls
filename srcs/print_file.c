@@ -24,6 +24,8 @@ void			print_normal(t_file *file, t_args *args)
 
 void			print_file(t_file *file, t_args *args)
 {
+	if (file->name == NULL)
+		return ;
 	if (ft_strcont(args->opts, 'l'))
 		print_long(file, args);
 	else

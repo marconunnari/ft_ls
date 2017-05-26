@@ -22,6 +22,8 @@ long		ft_btree_cmp_ls(t_btree *b1, t_btree *b2, char *opts)
 	file2 = (t_file*)b2->content;
 	if (file1 == NULL || file2 == NULL)
 		return (0);
+	if (file1->name == NULL || file2->name == NULL)
+		return (0);
 	if (ft_strcont(opts, 't'))
 	{
 		res = file2->mtime.tv_sec - file1->mtime.tv_sec;
