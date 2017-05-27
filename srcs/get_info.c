@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 18:49:00 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/22 19:29:40 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/27 20:42:56 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ char		get_file_type(mode_t mode)
 
 char		*get_username(long uid)
 {
-	struct passwd user;
+	struct passwd *user;
 
-	user = *getpwuid(uid);
-	return (user.pw_name);
+	user = getpwuid(uid);
+	if (user)
+		return (user->pw_name);
+	else
+		return ("");
 }
 
 char		*get_groupname(long gid)
@@ -47,9 +50,11 @@ char		*get_groupname(long gid)
 	struct group *grp;
 
 	grp = getgrgid(gid);
-	return (grp->gr_name);
+	if (grp)
+		return (grp->gr_name);
+	else
+		return ("");
 }
-
 
 char		*get_permissions(mode_t mode)
 {

@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 17:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/26 00:01:53 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/27 20:42:29 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ void			set_lengths(t_args *args, t_file *tfile)
 	if (grouplen > args->maxgroup)
 		args->maxgroup = grouplen;
 	sizelen = getlen(tfile->size);
-	if (sizelen > args->maxsize && (args->considerdirsize || tfile->type != 'd'))
+	if (sizelen > args->maxsize &&
+			(args->considerdirsize || tfile->type != 'd'))
 		args->maxsize = sizelen;
 }
 
-int			get_stat(char *name, t_args *args, struct stat *info)
+int				get_stat(char *name, t_args *args, struct stat *info)
 {
 	if (lstat(name, info) == -1)
 	{
@@ -68,10 +69,12 @@ t_file			*get_file(char *name, t_args *args)
 		return (NULL);
 	tfile->name = NULL;
 	tfile->type = '\0';
+	tfile->permissions = ft_strnew(0);
 	if (!get_stat(name, args, &info))
 		return (tfile);
 	tfile->name = ft_strdup(name);
 	tfile->type = get_file_type(info.st_mode);
+	free(tfile->permissions);
 	tfile->permissions = get_permissions(info.st_mode);
 	tfile->links = (long)info.st_nlink;
 	tfile->user = get_username((long)info.st_uid);

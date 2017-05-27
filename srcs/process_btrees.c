@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:25:25 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/25 23:42:57 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/27 20:51:53 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ void		ft_btree_dirs(t_btree *b, t_args *args)
 			process_dir(file->name, args);
 			args->newline = 1;
 		}
-		else if (ft_strcont(args->opts, 'R') && !is_current_or_parent(file->name))
+		if (!is_current_or_parent(file->name))
 		{
-			args->newline = 1;
-			process_dir(file->name, args);
-		}
-		else if (!is_current_or_parent(file->name))
-		{
-			print_file(file, args);
-			args->newline = 1;
-		}
-		else
-		{
+			if (ft_strcont(args->opts, 'R'))
+			{
+				args->newline = 1;
+				process_dir(file->name, args);
+			}
+			else
+			{
+				print_file(file, args);
+				args->newline = 1;
+			}
 		}
 	}
 }
@@ -66,9 +66,9 @@ void		ft_btree_all(t_btree *b, t_args *args)
 	print_file(file, args);
 }
 
-void	ft_btree_not_dirs(t_btree *b, t_args *args)
+void		ft_btree_not_dirs(t_btree *b, t_args *args)
 {
-	t_file  *file;
+	t_file	*file;
 
 	file = (t_file*)b->content;
 	if (file == NULL)

@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/26 00:13:24 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/27 20:46:34 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ typedef struct	s_args
 	long long	blocks;
 }				t_args;
 
-typedef struct	timespec
-				t_time;
+typedef struct timespec	t_time;
 
 typedef struct	s_file
 {
@@ -82,4 +81,5 @@ void			ft_btree_not_dirs(t_btree *b, t_args *args);
 void			ft_btree_dirs(t_btree *b, t_args *args);
 void			ft_btree_all(t_btree *b, t_args *args);
 void			print_long(t_file *file, t_args *args);
+void			ft_btree_free_ls(t_btree *b);
 #endif

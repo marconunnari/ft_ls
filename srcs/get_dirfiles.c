@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 16:08:48 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/24 15:45:35 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/27 20:41:56 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ int				parse_entry(char *dirname, t_args *args,
 
 t_btree			*get_dirfiles(char *dirname, t_args *args)
 {
-	t_btree		*files;
+	t_btree			*files;
 	struct dirent	*entry;
+	DIR				*dirp;
 
 	files = NULL;
 	dirname = ft_strjoin(dirname, "/");
-	DIR *dirp = opendir(dirname);
+	dirp = opendir(dirname);
 	if (dirp == NULL)
 	{
 		error(dirname, args);

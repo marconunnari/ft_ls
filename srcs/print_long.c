@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:46:12 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/25 23:36:41 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/27 20:50:04 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,20 @@ void			l_mtime(t_file *file)
 
 	currtime = time(0);
 	mtime = ctime((const long *)&file->mtime);
-	//ft_printf("---- %s --- ", mtime);
-	if (file->mtime.tv_sec - currtime > 15770000 || currtime - file->mtime.tv_sec > 15770000)
-		ft_printf(" %3.3s %2.2s  %-4.5s", &mtime[4], &mtime[8], ft_strtrim(&mtime[20]));
+	if (file->mtime.tv_sec - currtime > 15770000 ||
+			currtime - file->mtime.tv_sec > 15770000)
+		ft_printf(" %3.3s %2.2s  %-4.5s",
+					&mtime[4], &mtime[8], ft_strtrim(&mtime[20]));
 	else
-		ft_printf(" %3.3s %2.2s %5.5s", &mtime[4], &mtime[8], &mtime[11]);
+		ft_printf(" %3.3s %2.2s %5.5s",
+					&mtime[4], &mtime[8], &mtime[11]);
 }
 
 void			l_size(t_file *file, t_args *args)
 {
 	if (file->type == 'c' || file->type == 'b')
 	{
-		ft_printf("    %ld, %ld",
+		ft_printf(" %4ld, %3ld",
 			(long)major(file->devtype),
 			(long)minor(file->devtype));
 	}

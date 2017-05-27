@@ -6,26 +6,26 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/26 00:14:29 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/27 20:49:21 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		usage(int code)
+void			usage(int code)
 {
 	ft_dprintf(2, "%s\n", "usage: ft_ls [-Ralrt] [file ...]");
 	exit(code);
 }
 
-void		check_opts(char *opts)
+void			check_opts(char *opts)
 {
 	int	i;
 
 	i = 0;
 	while (opts[i])
 	{
-		if(!ft_strcont("altrR1", opts[i]))
+		if (!ft_strcont("altrR1", opts[i]))
 		{
 			ft_dprintf(2, "ls: illegal option -- %c\n", opts[i]);
 			usage(1);
@@ -34,7 +34,7 @@ void		check_opts(char *opts)
 	}
 }
 
-t_args			*init_args()
+t_args			*init_args(void)
 {
 	t_args		*args;
 
@@ -64,8 +64,12 @@ t_args			*parse_args(int argc, char **argv)
 	args = init_args();
 	while (i < argc && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
 	{
-		if (!(ft_strlen(argv[i]) == 2 && argv[i][1] == '-'))
-			args->opts = ft_strmerge(args->opts, ft_strdup(&argv[i][1]));
+		if ((ft_strlen(argv[i]) == 2 && argv[i][1] == '-'))
+		{
+			i++;
+			break ;
+		}
+		args->opts = ft_strmerge(args->opts, ft_strdup(&argv[i][1]));
 		i++;
 	}
 	check_opts(args->opts);
