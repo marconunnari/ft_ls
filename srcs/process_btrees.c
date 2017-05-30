@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:25:25 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/27 20:51:53 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/30 20:18:31 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		ft_btree_dirs(t_btree *b, t_args *args)
 			process_dir(file->name, args);
 			args->newline = 1;
 		}
-		if (!is_current_or_parent(file->name))
+		else if (!is_current_or_parent(file->name))
 		{
 			if (ft_strcont(args->opts, 'R'))
 			{

@@ -6,17 +6,11 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/27 20:49:21 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/30 20:53:41 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-void			usage(int code)
-{
-	ft_dprintf(2, "%s\n", "usage: ft_ls [-Ralrt] [file ...]");
-	exit(code);
-}
 
 void			check_opts(char *opts)
 {
@@ -28,7 +22,8 @@ void			check_opts(char *opts)
 		if (!ft_strcont("altrR1", opts[i]))
 		{
 			ft_dprintf(2, "ls: illegal option -- %c\n", opts[i]);
-			usage(1);
+			ft_dprintf(2, "%s\n", "usage: ft_ls [-Ralrt] [file ...]");
+			exit(1);
 		}
 		i++;
 	}
@@ -53,15 +48,11 @@ t_args			*init_args(void)
 	return (args);
 }
 
-t_args			*parse_args(int argc, char **argv)
+int				parse_opts(int argc, char **argv, t_args *args)
 {
 	int			i;
-	t_args		*args;
-	t_file		*tfile;
-	t_btree		*file;
 
 	i = 1;
-	args = init_args();
 	while (i < argc && argv[i][0] == '-' && ft_strlen(argv[i]) > 1)
 	{
 		if ((ft_strlen(argv[i]) == 2 && argv[i][1] == '-'))
@@ -73,6 +64,18 @@ t_args			*parse_args(int argc, char **argv)
 		i++;
 	}
 	check_opts(args->opts);
+	return (i);
+}
+
+t_args			*parse_args(int argc, char **argv)
+{
+	int			i;
+	t_args		*args;
+	t_file		*tfile;
+	t_btree		*file;
+
+	args = init_args();
+	i = parse_opts(argc, argv, args);
 	while (i < argc)
 	{
 		tfile = get_file(argv[i++], args);
