@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:25:25 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/30 20:18:31 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:47:58 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void		ft_btree_not_dirs(t_btree *b, t_args *args)
 		return ;
 	if (file->type != 'd')
 	{
-		args->newline = 1;
+		if (file->name)
+			args->newline = 1;
 		print_file(file, args);
 	}
 }
