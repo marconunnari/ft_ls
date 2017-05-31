@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 19:26:32 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/30 20:53:41 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/31 20:19:13 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,12 @@ t_args			*parse_args(int argc, char **argv)
 
 	args = init_args();
 	i = parse_opts(argc, argv, args);
-	ft_quicksort((void**)argv, i, argc - 1, (int (*)(const void *, const void *))&ft_strcmp);
+	ft_quicksort((void**)argv, i, argc - 1,
+			(int (*)(const void *, const void *))&ft_strcmp);
 	while (i < argc)
 	{
+		if (!argv[i][0])
+			ft_error("ft_ls: fts_open: No such file or directory", 1);
 		tfile = get_file(argv[i++], args);
 		if (!(file = ft_btreenew(tfile, sizeof(t_file))))
 			return (NULL);
