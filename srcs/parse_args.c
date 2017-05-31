@@ -76,6 +76,7 @@ t_args			*parse_args(int argc, char **argv)
 
 	args = init_args();
 	i = parse_opts(argc, argv, args);
+	ft_quicksort((void**)argv, i, argc - 1, (int (*)(const void *, const void *))&ft_strcmp);
 	while (i < argc)
 	{
 		tfile = get_file(argv[i++], args);
