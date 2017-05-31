@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 18:21:37 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/27 20:46:34 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/31 20:53:34 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@
 # include <pwd.h>
 # include <grp.h>
 # include <limits.h>
+# include <sys/xattr.h>
 
 # ifndef __APPLE__
 #  define st_atimespec            st_atim
 #  define st_mtimespec            st_mtim
 #  define st_ctimespec            st_ctim
 #  define st_birthtimespec        st_birthtim
+#  define listxattr(a, b, c, d) listxattr(a, b, c)
 # endif
 
 typedef struct	s_args

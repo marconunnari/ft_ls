@@ -6,7 +6,7 @@
 /*   By: mnunnari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:46:12 by mnunnari          #+#    #+#             */
-/*   Updated: 2017/05/27 20:50:04 by mnunnari         ###   ########.fr       */
+/*   Updated: 2017/05/31 20:51:02 by mnunnari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ void			l_size(t_file *file, t_args *args)
 
 void			print_long(t_file *file, t_args *args)
 {
-	ft_printf("%c%s %*ld %-*s  %-*s",
+	ft_printf("%c%s%c%*ld %-*s  %-*s",
 		file->type, file->permissions,
+		listxattr(file->name, 0, 0, XATTR_NOFOLLOW) > 0 ? '@' : ' ',
 		args->maxlinks + 1, file->links,
 		args->maxuser, file->user,
 		args->maxgroup, file->group);
